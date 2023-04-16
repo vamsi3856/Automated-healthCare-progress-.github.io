@@ -1,0 +1,75 @@
+{% comment %} {% for doctor, data in output.items() %}
+  <h2>{{ doctor }}</h2>
+  <ul>
+    {% if data.medicine %}
+      <li><strong>Medicine:</strong>
+        <ul>
+          {% for medicine, date in data.medicine.items() %}
+            <li>{{ medicine }} ({{ date }})</li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% else %}
+      <li>No medicines</li>
+    {% endif %}
+    {% if data.test %}
+      <li><strong>Test:</strong>
+        <ul>
+          {% for test, date in data.test.items() %}
+            <li>{{ test }} ({{ date }})</li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% else %}
+      <li>No tests</li>
+    {% endif %}
+    {% if data.diagnosis %}
+      <li><strong>Diagnosis:</strong>
+        <ul>
+          {% for diagnosis, date in data.diagnosis.items() %}
+            <li>{{ diagnosis }} ({{ date }})</li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% else %}
+      <li>No diagnosis</li>
+    {% endif %}
+  </ul>
+{% endfor %} {% endcomment %}
+
+///////////////////////////////////////////////////////////////
+<script>
+  $(document).ready(function() {
+      $('#my-form').submit(function(event) {
+          // Prevent the form from submitting via the browser
+          event.preventDefault();
+  console.log("hello")
+          // Get the form data
+          var formdata={
+              name: $('#name').val(),
+              contact: $('#contact').val(),
+              medicine: $('#modal-text').val(),
+              ordermode: $('#order').val(),
+              address: $('#address').val(),
+              city: $('#city').val(),
+              pincode: $('#pincode').val()
+          }
+          // Send an AJAX POST request to the Flask route
+          $.ajax({
+              type: 'POST',
+              url: '/order_medicine',
+              data: formdata,
+              dataType: 'json',
+              success: function(response) {
+                  // Handle the success response
+                  alert(response.message);
+              },
+              error: function(error) {
+                  // Handle the error response
+                  alert('Error submitting form');
+              }
+          });
+      });
+  });
+  ///////////////////////////////////////////////////////////////
+</script>

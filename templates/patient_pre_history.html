@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/pikaday.min.css">  
+    <link rel="stylesheet" href="../static/userlist.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <style>
+        .my-column {
+          width: 100px;
+          height:20%;
+          
+                }
+                .table{
+                    border:2px solid white;
+                }
+                /* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    align-items:left;
+    justify-content:start;
+    text-align:left;
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    align-items:left;
+    justify-content:start;
+    text-align:left;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    align-items:left;
+    justify-content:start;
+    text-align:left;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .close1 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    align-items:left;
+    justify-content:start;
+    text-align:left;
+  }
+  
+  .close1:hover,
+  .close1:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    align-items:left;
+    justify-content:start;
+    text-align:left;
+  }
+  
+  .close2:hover,
+  .close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+      </style>
+      </head>
+    </head>
+    <body>
+
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient navbar-fixed-top">
+      <div class="container"><a class="navbar-brand logo" href="">Hello {{ username }}</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link active" href="/doctors_profile">Back</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="/">Mails</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="/">Your orders</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="/">Appointments</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="/logout">Logout</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+        <br/><br/><h1 class="mt-5"><b>Your Prescriptions</b></h1>
+        {% for doctor, data in output.items() %}
+        <h2 data-aos="fade-up"  data-aos-duration="1500">{{ doctor }}</h2>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                    <div class="card-body p-4">
+                        
+                        <center><h3>Medicine</h3></center>
+                            <div class="card card-body bg-dark text-light">
+                              {% if data.medicine %}
+                              <table>
+                                <tr>
+                                    <th><strong>Medicine</strong></th>
+                                    <th><strong>Date</strong></th>
+                                    <th><strong>Order</strong></th>
+                                </tr>
+                                {% for i,j in data.medicine.items() %}
+                                <tr>
+                                    <td>{{ i }}</td>
+                                    <td>{{ j }}</td>
+                                    <!--<td><a href="/order_med/{{ i }}" class="btn btn-warning">Order</a></td>-->
+                                    <td><button onclick="openModal('{{ i }}')">Order</button></td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                                {% else %}
+                                <center><h3>No Medicine</h3></center>
+                                {% endif %}
+                        </div>
+                    </div>
+            </div>
+            <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                    <div class="card-body p-4">
+                        <center><h3>Tests</h3></center>
+                                <div class="card card-body bg-dark text-light">
+                                    {% if data.test %}
+                                    <table>
+                                      <tr>
+                                          <th><strong>Test</strong></th>
+                                          <th><strong>Date</strong></th>
+                                          <th><strong>Book</strong></th>
+                                      </tr>
+                                      {% for i,j in data.test.items() %}
+                                      <tr>
+                                          <td>{{ i }}</td>
+                                          <td>{{ j }}</td>
+                                          <td><button onclick="openModal1('{{ i }}')">Order</button></td>
+                                      </tr>
+                                      {% endfor %}
+                                      </table>
+                                      {% else %}
+                                      <center><h3>No Tests</h3></center>
+                                      {% endif %}
+                                </div>
+                    </div>
+            </div>
+            <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                    <div class="card-body p-4">
+                        <center><h3>Diagnosis</h3></center>
+                            <div class="card card-body bg-dark text-light">
+                                {% if data.diagnosis %}
+                                <table>
+                                  <tr>
+                                      <th><strong>diagnose</strong></th>
+                                      <th><strong>Date</strong></th>
+                                      <th><strong>Appointment</strong></th>
+
+                                  </tr>
+                                  {% for i,j in data.diagnosis.items() %}
+                                  <tr>
+                                      <td>{{ i }}</td>
+                                      <td>{{ j }}</td>
+                                      <td><button onclick="openModal2('{{ i }}')">Book</button></td>
+                                  </tr>
+                                  {% endfor %}
+                                  </table>
+                                  {% else %}
+                                  <center><h3>No diagnosis</h3></center>
+                                  {% endif %}
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+          <!--///////////////////////////////////////////////////////////////-->
+        </div>
+      </div>
+    {% endfor %}
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <!--///////////////////////////////////////////////////////////////-->
+          <div class="container">
+            <div>
+                <form id="my-form">
+                    <div class="form-group mb-3">
+                        <div id="formdiv">
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-md-8 offset-md-1">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Name </strong></p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><input class="form-control" type="text" id="name" style="margin-left: 0px;font-family: Roboto, sans-serif;" name="name" placeholder="Name"></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-md-8 offset-md-1 left">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Contact</strong></p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><input class="form-control" type="tel" name="contact" id="contact" style="font-family: Roboto, sans-serif;" placeholder="Number"></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-md-8 offset-md-1 left">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Medicine</strong>(Auto filled)</p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><input class="form-control" type="text" name="patmed" id="patmed" style="font-family: Roboto, sans-serif;"></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;margin-top: -16px;">
+                                <div class="col-md-8 offset-md-1">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Order mode</strong></p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><select class="form-select" style="font-family: Roboto, sans-serif;" name="order" id="order">
+                                        <optgroup label="order">
+                                            <option value="------" disabled selected>Select</option>
+                                            <option value="Delivery">Delivery</option>
+                                            <option value="Take away">Take away</option>
+                                        </optgroup>
+                                    </select></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-md-8 offset-md-1 left">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Address</strong></p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><input class="form-control" name="address" id="address" type="text" style="font-family: Roboto, sans-serif;"></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-md-8 offset-md-1 left">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>City</strong></p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><input class="form-control" name="city" id="city" type="text" style="font-family: Roboto, sans-serif;"></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-md-8 offset-md-1 left">
+                                    <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Pincode</strong></p>
+                                </div>
+                                <div class="col-md-10 offset-md-1"><input class="form-control" name="pincode" id="pincode" type="text" style="font-family: Roboto, sans-serif;"></div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                <div class="col-12 col-md-4 offset-md-4"><button class="btn btn-light btn-lg" style="font-family: Roboto, sans-serif;" type="submit">Submit</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////-->
+<div id="myModal1" class="modal">
+    <div class="modal-content">
+      <span class="close1" onclick="closeModal1()">&times;</span>
+      <!--///////////////////////////////////////////////////////////////-->
+      <div class="container">
+        <div>
+            <form id="my-form1">
+                <div class="form-group mb-3">
+                    <div id="formdiv">
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Name </strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" type="text1" id="name1" style="margin-left: 0px;font-family: Roboto, sans-serif;" name="name" placeholder="Name"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Contact</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" type="tel" name="contact1" id="contact1" style="font-family: Roboto, sans-serif;" placeholder="Number"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Test</strong>(Auto filled)</p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" type="text" name="patmed1" id="patmed1" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;margin-top: -16px;">
+                            <div class="col-md-8 offset-md-1">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Test mode</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><select class="form-select" style="font-family: Roboto, sans-serif;" name="order1" id="order1">
+                                    <optgroup label="order">
+                                        <option value="------" disabled selected>Select</option>
+                                        <option value="Home Service">Home service</option>
+                                        <option value="In center">In center</option>
+                                    </optgroup>
+                                </select></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Address</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" name="address1" id="address1" type="text" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>City</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" name="city1" id="city1" type="text" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Pincode</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" name="pincode1" id="pincode1" type="text" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-12 col-md-4 offset-md-4"><button class="btn btn-light btn-lg" style="font-family: Roboto, sans-serif;" type="submit">Submit</button></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!--//////////////////////////////////////////////////////////////////////////////////////////-->
+<div id="myModal2" class="modal">
+    <div class="modal-content">
+      <span class="close2" onclick="closeModal2()">&times;</span>
+      <!--///////////////////////////////////////////////////////////////-->
+      <div class="container">
+        <div>
+            <form id="my-form2">
+                <div class="form-group mb-3">
+                    <div id="formdiv">
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Name </strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" type="text" id="name2" style="margin-left: 0px;font-family: Roboto, sans-serif;" name="name2" placeholder="Name"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Contact</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" type="tel" name="contact2" id="contact2" style="font-family: Roboto, sans-serif;" placeholder="Number"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Test</strong>(Auto filled)</p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" type="text" name="patmed2" id="patmed2" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;margin-top: -16px;">
+                            <div class="col-md-8 offset-md-1">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Select Date</strong></p>
+                            </div>
+                           <!--////////--> <div class="col-md-10 offset-md-1"><input class="form-control" name="diag_date" id="diag_date" type="datetime-local" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Address</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" name="address2" id="address2" type="text" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>City</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" name="city2" id="city2" type="text" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-md-8 offset-md-1 left">
+                                <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;"><strong>Pincode</strong></p>
+                            </div>
+                            <div class="col-md-10 offset-md-1"><input class="form-control" name="pincode2" id="pincode2" type="text" style="font-family: Roboto, sans-serif;"></div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                            <div class="col-12 col-md-4 offset-md-4"><button class="btn btn-light btn-lg" style="font-family: Roboto, sans-serif;" type="submit">Submit</button></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!----//////////////////////////////////////////////////////////-->
+    <script>
+ // Get the modal
+ 
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal and display the dynamic value
+    function openModal(value) {
+       $("#patmed").val(value);
+    modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    function closeModal() {
+    modal.style.display = "none";
+    }
+
+    $(document).ready(function() {
+        $('#my-form').submit(function(event) {
+            // Prevent the form from submitting via the browser
+            event.preventDefault(); 
+    console.log("hello")
+    
+            // Get the form data
+            var formdata={
+                name: $('#name').val(),
+                contact: $('#contact').val(),
+                patmed: $('#patmed').val(),
+                ordermode: $('#order').val(),
+                address: $('#address').val(),
+                city: $('#city').val(),
+                pincode: $('#pincode').val()
+            }
+            
+            // Send an AJAX POST request to the Flask route
+            $.ajax({
+                type: 'POST',
+                url: '/order_medicine',
+                data: formdata,
+                dataType: 'json',
+                success: function(response) {
+                    // Handle the success response
+                    alert(response.message); 
+                },
+                error: function(error) {
+                    // Handle the error response
+                    alert('Error submitting form');
+                }
+            });
+        });
+    });
+        </script>
+        <!--///////////////////////////////////////////////////////////////////////////////////-->
+        <script>
+            // Get the modal
+            
+               var modal1 = document.getElementById("myModal1");
+           
+               // Get the <span> element that closes the modal
+               var span1 = document.getElementsByClassName("close1")[0];
+           
+               // When the user clicks the button, open the modal and display the dynamic value
+               function openModal1(value) {
+                  $("#patmed1").val(value);
+               modal1.style.display = "block";
+               }
+           
+               // When the user clicks on <span> (x), close the modal
+               function closeModal1() {
+               modal1.style.display = "none";
+               }
+           
+               $(document).ready(function() {
+                   $('#my-form1').submit(function(event) {
+                       // Prevent the form from submitting via the browser
+                       event.preventDefault(); 
+               console.log("hello")
+               
+                       // Get the form data
+                       var formdata={
+                           name1: $('#name1').val(),
+                           contact1: $('#contact1').val(),
+                           patmed1: $('#patmed1').val(),
+                           testmode1: $('#order1').val(),
+                           address1: $('#address1').val(),
+                           city1: $('#city1').val(),
+                           pincode1: $('#pincode1').val()
+                       }
+                       
+                       // Send an AJAX POST request to the Flask route
+                       $.ajax({
+                           type: 'POST',
+                           url: '/order_test',
+                           data: formdata,
+                           dataType: 'json',
+                           success: function(response) {
+                               // Handle the success response
+                               alert(response.message); 
+                           },
+                           error: function(error) {
+                               // Handle the error response
+                               alert('Error submitting form');
+                           }
+                       });
+                   });
+               });
+                   </script>
+                   <!--//////////////////////////////////////////////////////////////////////////////////////-->
+                   <script>
+                    // Get the modal
+                    
+                       var modal2 = document.getElementById("myModal2");
+                   
+                       // Get the <span> element that closes the modal
+                       var span2 = document.getElementsByClassName("close2")[0];
+                   
+                       // When the user clicks the button, open the modal and display the dynamic value
+                       function openModal2(value) {
+                          $("#patmed2").val(value);
+                       modal2.style.display = "block";
+                       }
+                   
+                       // When the user clicks on <span> (x), close the modal
+                       function closeModal2() {
+                       modal2.style.display = "none";
+                       }
+                   
+                       $(document).ready(function() {
+                           $('#my-form2').submit(function(event) {
+                               // Prevent the form from submitting via the browser
+                               event.preventDefault(); 
+                       console.log("hello")
+                       
+                               // Get the form data
+                               var formdata={
+                                   name2: $('#name2').val(),
+                                   contact2: $('#contact2').val(),
+                                   patmed2: $('#patmed2').val(),
+                                   diag_date: $('#diag_date').val(),
+                                   address2: $('#address2').val(),
+                                   city2: $('#city2').val(),
+                                   pincode2: $('#pincode2').val()
+                               }
+                               
+                               // Send an AJAX POST request to the Flask route
+                               $.ajax({
+                                   type: 'POST',
+                                   url: '/order_diag',
+                                   data: formdata,
+                                   dataType: 'json',
+                                   success: function(response) {
+                                       // Handle the success response
+                                       alert(response.message); 
+                                   },
+                                   error: function(error) {
+                                       // Handle the error response
+                                       alert('Error submitting form');
+                                   }
+                               });
+                           });
+                       });
+                           </script>
+                           <!--//////////////////////////////////////////////////////////-->
+            <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+            <script src="../static/js/pikaday.min.js"></script>
+            <script src="../static/js/theme.js"></script>
+     <script>
+       AOS.init();
+     </script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+                
+    </body>
+</html>

@@ -1,0 +1,27 @@
+.nv{
+    background-color: #102770;
+    width: 100%;
+    height: 50px;
+  }
+  .nv a{
+    text-decoration: none;
+    float: right;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+  .nv a:hover{
+    background-color: #ffeba7;
+    color: black;
+  }
+  a {
+      cursor: pointer;
+    transition: all 200ms linear;
+  }
+  a:hover {
+      text-decoration: none;
+  }
+  

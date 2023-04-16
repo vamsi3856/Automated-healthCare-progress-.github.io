@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>detailes</title>
+    <link rel="stylesheet" href="https://unpkg.com/ @next/dist/aos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-DH1mnwpnujB/C+PnAGFJw/MiH+f/FQ00s4n4B8x0x9XbZxF2NTCs0rLr0HpUw+6" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Profile-Edit-Form-styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Profile-Edit-Form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css/pikaday.min.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<style>
+    .table{
+        margin-top: 50px;
+    }
+    .table,th,td{
+        border: 2px solid white;
+        border-collapse: collapse;
+        padding: 10px;
+    }
+    .table,th{
+        background-color: white;
+        color:black;
+        border:2px solid black;
+    }
+</style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark portfolio-navbar gradient navbar-fixed-top">
+        <div class="container"><a class="navbar-brand logo" href="">Hello {{ username }}</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!--<li class="nav-item"><a class="nav-link active" href="/doctor_pres/{{ username }}">Prescription History</a></li>-->
+                    <li class="nav-item"><a class="nav-link active" href="/">Mails</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container profile profile-view" id="profile">
+        <div class="row">
+            <div class="col-md-12 alert-col relative">
+                <div class="alert alert-info alert-dismissible absolute center" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><span>Welcome {{ username }}</span></div>
+            </div>
+        </div>
+        <form>
+            <div class="row profile-row">
+                <div class="col-md-4 relative">
+                    
+                        <img src="{{ url_for('static', filename='images/patnt.png') }}"/>
+                    <!--<input class="form-control form-control" type="file" name="avatar-file">-->
+                </div>
+                <div class="col-md-8">
+                    <h1>Profile </h1>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Patient Name</label><input class="form-control" type="text" value="{{ data[0][1] }}" disabled></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Contact </label><input class="form-control" type="text" value="{{ data[0][5] }}" disabled></div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Gender</label><input class="form-control" type="text" value="{{ data[0][3] }}" disabled></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Age</label><input class="form-control" type="text" value="{{ data[0][4] }}" disabled></div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3"><label class="form-label">Problem</label><input class="form-control" type="text" value="{{ problem[0][0] }}" disabled></div>
+                    
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 content-right"><button class="btn btn-primary form-btn" type="submit">SAVE </button><button class="btn btn-danger form-btn" type="reset">CANCEL </button></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="container py-4 py-xl-5">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto" data-aos="fade-up"  data-aos-duration="1500">
+                    <h2>Prescriptions</h2>
+                    
+                </div>
+            </div>
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                    <div class="card bg-dark text-light"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="{{ url_for('static', filename='images/medicine.png') }}">
+                        <div class="card-body p-4">
+                            <center><h3>Medicine</h3>
+                            <p>
+    
+                                <button class="btn btn-primary bi bi-chevron-right" type="button" data-bs-toggle="collapse" data-bs-target="#collapsing1">
+                
+                                Give a Medicine
+                
+                                </button>
+                
+                              </p></center>
+                              <div class="collapse" id="collapsing1">
+                                <div class="card card-body bg-dark text-light">
+                                  <!--#####################################
+                                  ##################################-->
+                                  <form id="my-form">
+                                    <textarea type="text" class="m-2" rows="2" cols="30" name="mymedicine" id="mymedicine" placeholder="Add Medicine here"></textarea>
+                                    <input type="text" name="mydoctor" id="mydoctor" value="{{ username }}" hidden/>
+                                    <input type="text" name="mypatient" id="mypatient" value="{{ data[0][1] }}" hidden/>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </form>
+                                    
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                    <div class="card bg-dark text-light"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="{{ url_for('static', filename='images/tests.png') }}">
+                        <div class="card-body p-4">
+                            <center><h3>Tests</h3>
+                            <p>
+    
+                                <button class="btn btn-primary bi bi-chevron-right" type="button" data-bs-toggle="collapse" data-bs-target="#collapsing2">
+                
+                                Give a Test
+                
+                                </button>
+                
+                              </p></center>
+                              <div class="collapse" id="collapsing2">
+                                <div class="card card-body bg-dark text-light">
+                                 <!--#####################################
+                                  ##################################-->
+                                  <form id="my-form1">
+                      
+                                    
+                                    <textarea class="m-2" rows="2" cols="30" name="mytest" id="mytest" placeholder="Add test here"></textarea>
+                                    <input type="text" name="mydoctor" id="mydoctor" value="{{ username }}" hidden/>
+                                    <input type="text" name="mypatient" id="mypatient" value="{{ data[0][1] }}" hidden/>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+
+                                    </form>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                    <div class="card bg-dark text-light"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="{{ url_for('static', filename='images/diagnose.png') }}">
+                        <div class="card-body p-4">
+                            <center><h3>Diagnosis</h3>
+                            <p>
+    
+                                <button class="btn btn-primary bi bi-chevron-right" type="button" data-bs-toggle="collapse" data-bs-target="#collapsing3">
+                
+                                Give a Diagnosis
+                
+                                </button>
+                
+                              </p></center>
+                              <div class="collapse" id="collapsing3">
+                                <div class="card card-body bg-dark text-light">
+                                  <!--#####################################
+                                  ##################################-->
+                                  <form id="my-form2">
+                                    <textarea class="m-2" rows="2" cols="30" name="diag" id="diag" placeholder="Add diagnose here"></textarea>
+                                    <input type="text" name="mydoctor" id="mydoctor" value="{{ username }}" hidden/>
+                                    <input type="text" name="mypatient" id="mypatient" value="{{ data[0][1] }}" hidden/>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+      
+                                    </form>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+       <!---/////////////////////////////////////////////////////////////////////////////////////-->
+       <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+        <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                <div class="card-body p-4">
+                    <center><h3>Medicine</h3></center>
+                        <div class="card card-body bg-dark text-light">
+                          {% if med %}
+                          <table>
+                            <tr>
+                                <th>Medicine</th>
+                                <th>Date</th>
+                            </tr>
+                            {% for i in med %}
+                            <tr>
+                                <td>{{ i[0] }}</td>
+                                <td>{{ i[1] }}</td>
+                            </tr>
+                            {% endfor %}
+                            </table>
+                            {% else %}
+                            <center><h3>No Medicine</h3></center>
+                            {% endif %}
+                    </div>
+                </div>
+        </div>
+        <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                <div class="card-body p-4">
+                    <center><h3>Tests</h3></center>
+                            <div class="card card-body bg-dark text-light">
+                              {% if tes %}
+                              <table>
+                                <tr>
+                                    <th>Test</th>
+                                    <th>Date</th>
+                                </tr>
+                                {% for i in tes %}
+                                <tr>
+                                    <td>{{ i[0] }}</td>
+                                    <td>{{ i[1] }}</td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                                {% else %}
+                                <center><h3>No Tests</h3></center>
+                                {% endif %}
+                            </div>
+                </div>
+        </div>
+        <div class="col" data-aos="fade-up"  data-aos-duration="1500">
+                <div class="card-body p-4">
+                    <center><h3>Diagnosis</h3></center>
+                        <div class="card card-body bg-dark text-light">
+                          {% if dia %}
+                          <table>
+                            <tr>
+                                <th>Diagnosis</th>
+                                <th>Date</th>
+                            </tr>
+                            {% for i in dia %}
+                            <tr>
+                                <td>{{ i[0] }}</td>
+                                <td>{{ i[1] }}</td>
+                            </tr>
+                            {% endfor %}
+                            </table>
+                            {% else %}
+                            <center><h3>No Diagnosis
+                            </h3></center>
+                            {% endif %}
+                        </div>
+                </div>
+           
+        </div>
+        
+        
+    </div>
+</div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#my-form').submit(function(event) {
+                // Prevent the form from submitting via the browser
+                event.preventDefault();
+        console.log("hello")
+                // Get the form data
+                var formdata={
+                    mymedicine: $('#mymedicine').val(),
+                    mydoctor: $('#mydoctor').val(),
+                    mypatient: $('#mypatient').val()
+                }
+                var mymedicine = JSON.stringify(formdata);
+                console.log(mymedicine)
+                // Send an AJAX POST request to the Flask route
+                $.ajax({
+                    type: 'POST',
+                    url: '/add_medicine',
+                    data: formdata,
+                    dataType: 'json',
+                    success: function(response) {
+                        // Handle the success response
+                        alert(response.message);
+                    },
+                    error: function(error) {
+                        // Handle the error response
+                        alert('Error submitting form');
+                    }
+                });
+            });
+        });
+//////////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function() {
+    $('#my-form1').submit(function(event) {
+        // Prevent the form from submitting via the browser
+        event.preventDefault();
+console.log("hello")
+        // Get the form data
+        var formdata={
+            mytest: $('#mytest').val(),
+            mydoctor: $('#mydoctor').val(),
+            mypatient: $('#mypatient').val()
+        }
+        var mytest= JSON.stringify(formdata);
+        // Send an AJAX POST request to the Flask route
+        $.ajax({
+            type: 'POST',
+            url: '/add_test',
+            data: formdata,
+            dataType: 'json',
+            success: function(response) {
+                // Handle the success response
+                alert(response.message);
+            },
+            error: function(error) {
+                // Handle the error response
+                alert('Error submitting form');
+            }
+        });
+    });
+});
+//////////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function() {
+    $('#my-form2').submit(function(event) {
+        // Prevent the form from submitting via the browser
+        event.preventDefault();
+
+        // Get the form data
+        var formdata={
+            diag: $('#diag').val(),
+            mydoctor: $('#mydoctor').val(),
+            mypatient: $('#mypatient').val()
+        }
+        var diag = JSON.stringify(formdata);
+        // Send an AJAX POST request to the Flask route
+        $.ajax({
+            type: 'POST',
+            url: '/add_diag',
+            data: formdata,
+            dataType: 'json',
+            success: function(response) {
+                // Handle the success response
+                alert(response.message);
+            },
+            error: function(error) {
+                // Handle the error response
+                alert('Error submitting form');
+            }
+        });
+    });
+});
+        </script>        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-jMfiGxjzg67XcqU1Q2LPrn6UjA6U1d6ASRIYEdcFp6q3Sc3jFH9XeI5SLb1re6MH" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/Profile-Edit-Form-profile.js') }}"></script>
+   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+   <script src="{{ url_for('static', filename='js/pikaday.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-jMfiGxjzg67XcqU1Q2LPrn6UjA6U1d6ASRIYEdcFp6q3Sc3jFH9XeI5SLb1re6MH" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+             
+</body>
+
+</html>

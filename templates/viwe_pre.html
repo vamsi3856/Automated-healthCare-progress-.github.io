@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Your Prescriptions</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="../static/css/Responsive-Form-Contact-Form-Clean.css">
+    <link rel="stylesheet" href="../static/css/Responsive-Form.css">
+    <link rel="stylesheet" href="../static/userlist.css">
+        <style>
+            /* The Modal (background) */
+            .modal {
+              display: none; /* Hidden by default */
+              position: fixed; /* Stay in place */
+              z-index: 1; /* Sit on top */
+              padding-top: 100px; /* Location of the box */
+              left: 0;
+              top: 0;
+              width: 100%; /* Full width */
+              height: 100%; /* Full height */
+              overflow: auto; /* Enable scroll if needed */
+              background-color: rgb(0,0,0); /* Fallback color */
+              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            
+            /* Modal Content */
+            .modal-content {
+              background-color: #fefefe;
+              margin: auto;
+              padding: 20px;
+              border: 1px solid #888;
+              width: 80%;
+            }
+            
+            /* The Close Button */
+            .close {
+              color: #aaaaaa;
+              float: right;
+              font-size: 28px;
+              font-weight: bold;
+            }
+            
+            .close:hover,
+            .close:focus {
+              color: #000;
+              text-decoration: none;
+              cursor: pointer;
+            }
+            </style>
+    </head>
+    <body>
+        <h1>{{ username }}Prescriptions</h1>
+        <center><table>
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>disease</th>
+                    <th>contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td> 
+                       {{ contact[0][0] }}
+                    </td>
+                    <td><button id="myBtn" class="btn">Click here</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table></center>
+        <div id="myModal" class="modal">
+            <!-- Modal Content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
+             <div class="container">
+                <div>
+                    <form>
+                        <div class="form-group mb-3">
+                            <div id="formdiv">
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Client Name </strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" value="{{ bigdata[0][2] }}" style="margin-left: 0px;font-family: Roboto, sans-serif;" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Doctor Name</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" style="font-family: Roboto, sans-serif;" name="birthDate" type="text" value="{{ bigdata[0][1] }}" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Age</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" type="text" style="margin-left: 0px;font-family: Roboto, sans-serif;" name="birthPlace" value="{{ bigdata[0][3] }}" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Contact</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1" style="font-family: Roboto, sans-serif;"><input class="form-control" type="text" style="margin-left: 0px;" value="{{ bigdata[0][4] }}" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Height</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" type="text" style="margin-left: 0px;font-family: Roboto, sans-serif;" value="{{ bigdata[0][5] }}" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Weight</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" style="font-family: Roboto, sans-serif;" value="{{ bigdata[0][6] }}" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Disease</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" style="font-family: Roboto, sans-serif;" value="{{ bigdata[0][7] }}" disabled></div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-md-8 offset-md-1">
+                                        <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Prescribed medicines</strong></p>
+                                    </div>
+                                    <div class="col-md-10 offset-md-1"><input class="form-control" type="text" style="font-family: Roboto, sans-serif;" value="{{ bigdata[0][8] }}" disabled></div>
+                                </div>
+                                <div id="mydiv" style="display:none;">
+                                    <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                        <div class="col-md-8 offset-md-1">
+                                            <p style="margin-left: 2%;font-family: Roboto, sans-serif;font-size: 24px;text-align:left;"><strong>Send To</strong></p>
+                                        </div>
+                                        <div class="col-md-10 offset-md-1"><input class="form-control" type="mail" style="font-family: Roboto, sans-serif;"></div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;padding-top: 24px;">
+                                    <div class="col-12 col-md-4 offset-md-4"><button class="btn btn-light btn-lg" style="font-family: Roboto, sans-serif;" onclick="window.print()">Print</button>
+                                        <a href="mailto:vamsikumar487@example.com" class="btn btn-light btn-lg" style="margin-left: 16px;">Mail now</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            </div>
+          </div>
+          <script>
+            // Get the modal
+            var modal = document.getElementById("myModal");
+            
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+            
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            
+            // When the user clicks the button, open the modal 
+            btn.onclick = function() {
+              modal.style.display = "block";
+            }
+            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+                }
+                
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+                }
+                </script>
+
+          
+    </body>
+</html>

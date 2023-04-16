@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Client Register</title>
+  <link rel="stylesheet" href="../static/style.css">
+<style>
+  form .dot {
+    display: inline-block;
+    margin-right: 20px;
+    color:white;
+  }
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="login-box">
+  <h2>Client Register</h2>
+  <form method="post" action='/client_register'>
+    <div class="user-box">
+      <input type="text" name="username" required="">
+      <label>Name</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="password" required="">
+      <label>Password</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="cnfpass" required="">
+      <label>Confirm Password</label>
+    </div>
+    
+    <div class="dot">
+      <input type="radio" id="male" name="gender" value="male">
+      <label for="male">Male</label>
+    </div>
+    <div class="dot">
+      <input type="radio" id="female" name="gender" value="female">
+      <label for="female">Female</label>
+    </div>
+    <div class="dot">
+      <input type="radio" id="other" name="gender" value="other">
+      <label for="other">Other</label>
+    </div><br><br>
+    <div class="user-box">
+      <input type="text" name="age" required="">
+      <label>Age</label>
+    </div>
+      <div class="user-box">
+        <input type="tel" name="contact" required="">
+        <label>Phone Number</label>
+      </div>
+    <input type="submit" value="Register">
+  </form>
+</div>
+<!-- partial -->
+  
+</body>
+</html>
